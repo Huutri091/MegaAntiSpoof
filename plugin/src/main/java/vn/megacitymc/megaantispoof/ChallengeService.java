@@ -32,11 +32,17 @@ final class ChallengeService implements Listener {
     private final ConcurrentMap<UUID, Session> sessions = new ConcurrentHashMap<>();
     private final Set<UUID> running = ConcurrentHashMap.newKeySet();
     private final AtomicBoolean packetEvents = new AtomicBoolean();
+    private final PunishmentManager punishment;
     private PacketListener listener;
 
     ChallengeService(MegaAntiSpoofPlugin plugin, VersionAdapter adapter, Messages messages) {
         this.plugin = plugin; this.adapter = adapter; this.messages = messages;
         this.protocol = ProtocolLibrary.getProtocolManager(); this.webhook = new WebhookClient(plugin);
+        this.punishment = new PunishmentManager(plugin, messages);
+    }
+
+    void reload() {
+        punishment.load();
     }
 
     void enable() {
@@ -153,19 +159,40 @@ final class ChallengeService implements Listener {
         var result = new DetectionResult(player.getUniqueId(), player.getName(), ip, status, session.clientVersion,
                 List.copyOf(session.detected), List.copyOf(session.detected), checkedMods, Instant.now());
         webhook.send(result);
+        int currentViolations = punishment.getViolations(player.getUniqueId());
+        if (status == DetectionResult.Status.PASSED) {
+            if (punishment.shouldResetOnPass()) {
+                punishment.resetViolations(player.getUniqueId());
+                currentViolations = 0;
+            }
+        } else if (status == DetectionResult.Status.FAILED) {
+            currentViolations = punishment.recordViolation(player.getUniqueId());
+        }
+
+        int maxViolations = punishment.getMaxViolations();
         String key = switch (status) { case PASSED -> "ket-qua.dat"; case FAILED -> "ket-qua.khong-dat";
             case PROTECTED -> "ket-qua.duoc-bao-ve"; default -> "ket-qua.loi"; };
-        String text = messages.format(key, "{player}", player.getName(), "{mods}", String.join(", ", session.detected));
+        String text = messages.format(key,
+                "{player}", player.getName(),
+                "{mods}", String.join(", ", session.detected),
+                "{violations}", String.valueOf(currentViolations),
+                "{max_violations}", String.valueOf(maxViolations),
+                "{discord}", punishment.getDiscordInvite());
         Bukkit.getConsoleSender().sendMessage(text);
         for (Player online : Bukkit.getOnlinePlayers()) if (online.hasPermission("megaantispoof.alert")) online.sendMessage(text);
-        if (player.isOnline() && status == DetectionResult.Status.FAILED
-                && plugin.getConfig().getBoolean("actions.kick",
-                        plugin.getConfig().getBoolean("xu-ly.kick", true)))
-            player.kickPlayer(messages.format("kick", "{mods}", String.join(", ", session.detected)));
-        else if (player.isOnline() && status == DetectionResult.Status.PROTECTED
+
+        if (player.isOnline() && status == DetectionResult.Status.FAILED) {
+            if (punishment.isBanEnabled() && currentViolations >= maxViolations) {
+                punishment.executeBan(player, String.join(", ", session.detected), currentViolations);
+            } else if (plugin.getConfig().getBoolean("actions.kick",
+                    plugin.getConfig().getBoolean("xu-ly.kick", true))) {
+                punishment.executeKick(player, String.join(", ", session.detected), currentViolations);
+            }
+        } else if (player.isOnline() && status == DetectionResult.Status.PROTECTED
                 && plugin.getConfig().getBoolean("actions.kick-on-no-response",
-                        plugin.getConfig().getBoolean("xu-ly.kick-khi-khong-phan-hoi", true)))
-            player.kickPlayer(messages.get("kick-khong-phan-hoi"));
+                        plugin.getConfig().getBoolean("xu-ly.kick-khi-khong-phan-hoi", true))) {
+            punishment.executeNoResponseKick(player);
+        }
     }
 
     private void sendPackets(Player player, Session session) throws Exception {

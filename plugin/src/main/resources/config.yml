@@ -39,6 +39,16 @@ actions:
   # Kick sau khi không phản hồi đủ số lần thử; không coi đây là phát hiện mod cụ thể.
   kick-on-no-response: true
 
+punishment:
+  # Tự động ban vĩnh viễn khi người chơi cố chấp vào lại server mà không gỡ mod cấm.
+  ban-enabled: true
+  # Số lần phát hiện vi phạm tối đa trước khi ban vĩnh viễn (mặc định: 3 lần).
+  max-violations: 3
+  # Tự động xóa số lần vi phạm khi người chơi gỡ mod và vượt qua kiểm tra (PASSED).
+  reset-on-pass: true
+  # Link Discord hỗ trợ/kháng cáo hiển thị trong thông báo kick và ban.
+  discord-invite: "https://discord.gg/megacitymc"
+
 webhook:
   # Bật gửi kết quả PASSED/FAILED/PROTECTED/ERROR lên Discord.
   enabled: false

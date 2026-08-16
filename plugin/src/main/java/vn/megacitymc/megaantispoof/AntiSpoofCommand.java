@@ -13,7 +13,7 @@ final class AntiSpoofCommand implements TabExecutor {
     @Override public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (!sender.hasPermission("megaantispoof.admin")) { sender.sendMessage(messages.get("khong-co-quyen")); return true; }
         if (args.length == 1 && args[0].equalsIgnoreCase("reload")) {
-            plugin.reloadConfig(); messages.reload(); sender.sendMessage(messages.get("da-tai-lai")); return true;
+            plugin.reloadConfig(); messages.reload(); service.reload(); sender.sendMessage(messages.get("da-tai-lai")); return true;
         }
         if (args.length >= 1 && args[0].equalsIgnoreCase("debug")) {
             if (args.length == 1 || args[1].equalsIgnoreCase("status")) {

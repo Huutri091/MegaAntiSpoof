@@ -33,6 +33,7 @@ Plugin hoạt động hoàn toàn từ phía máy chủ (**100% Server-Side**), 
 
 - **🕵️ Phát hiện Server-Side không cần Mod**: Gửi gói tin thử thách ngầm (Sign GUI ảo) để buộc client tự động phân giải các khóa dịch (`translate`) và phím tắt (`keybind`) độc quyền của mod gian lận.
 - **🚀 Đa nền tảng & Hỗ trợ Folia**: Tương thích hoàn toàn với kiến trúc đa luồng của **Folia**, đồng thời hoạt động mượt mà trên **Paper**, **Purpur** từ phiên bản **1.21 đến 26.x**.
+- **🔨 Cơ chế Xử phạt Tự động & Auto-Ban**: Tự động đếm và lưu vết số lần vi phạm (`violations.yml`). Nếu người chơi cố chấp vào lại server mà không gỡ mod quá số lần quy định (mặc định 3 lần), hệ thống sẽ tự động thực hiện **Ban vĩnh viễn (Permanent Ban)** và đính kèm thông tin liên hệ Discord.
 - **📊 Báo cáo Discord Webhook chuyên nghiệp**: Tích hợp gửi thông báo chi tiết về Discord Embed theo thời gian thực (Bao gồm: Tên tài khoản, UUID, Địa chỉ IP, Tên Server, Kết quả PASSED/FAILED và bảng chi tiết từng mod được quét).
 - **🛡️ Cơ chế Retry & Anti-Spoof thông minh**: Hỗ trợ timeout, cấu hình khoảng thời gian gửi lại gói tin và tự động xử lý khi client cố tình không phản hồi thử thách.
 - **⚡ Tự động tải Dependency (Auto Bootstrap)**: Hỗ trợ tự động tải thư viện cần thiết khi khởi động nếu máy chủ chưa có sẵn.
@@ -125,6 +126,13 @@ challenge:
 actions:
   kick: true
   kick-on-no-response: false
+
+# Cấu hình xử phạt & Ban vĩnh viễn người chơi cố chấp
+punishment:
+  ban-enabled: true
+  max-violations: 3
+  reset-on-pass: true
+  discord-invite: "https://discord.gg/megacitymc"
 
 # Cấu hình Discord Webhook báo cáo chi tiết
 webhook:

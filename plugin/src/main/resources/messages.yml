@@ -1,5 +1,5 @@
 khong-co-quyen: "&cBạn không có quyền sử dụng lệnh này."
-da-tai-lai: "&aĐã tải lại config.yml và messages.yml."
+da-tai-lai: "&aĐã tải lại config.yml, messages.yml và dữ liệu vi phạm."
 khong-tim-thay: "&cKhông tìm thấy người chơi đang trực tuyến."
 bat-dau: "&eĐang kiểm tra bảo mật người chơi &f{player}&e..."
 dang-kiem-tra: "&cNgười chơi đang được kiểm tra hoặc danh sách mod không hợp lệ."
@@ -11,14 +11,26 @@ debug:
   cu-phap: "&cDùng: /megaantispoof debug <on|off|status>"
 ket-qua:
   dat: "&a[MegaAntiSpoof] &f{player} &aPASSED - không phát hiện mod cấm."
-  khong-dat: "&c[MegaAntiSpoof] &f{player} &cKHÔNG ĐẠT - phát hiện: &f{mods}"
+  khong-dat: "&c[MegaAntiSpoof] &f{player} &cKHÔNG ĐẠT - phát hiện: &f{mods} &e(Vi phạm: &c{violations}/{max_violations}&e)"
+  da-ban: "&4[MegaAntiSpoof] &cĐÃ BAN VĨNH VIỄN &f{player} &cdo cố chấp dùng mod cấm &f{mods} &cquá {max_violations} lần!"
   duoc-bao-ve: "&6[MegaAntiSpoof] &f{player} &6không phản hồi challenge (PROTECTED); không kết luận gian lận."
   loi: "&c[MegaAntiSpoof] Không thể hoàn tất kiểm tra cho &f{player}&c."
 kick: |-
-  &cKết nối bị từ chối bởi MegaAntiSpoof
+  &c[MegaAntiSpoof] Kết nối bị từ chối!
   &7Phát hiện mod/client bị cấm: &f{mods}
-  &7Nếu đây là nhầm lẫn, hãy liên hệ quản trị viên.
+  &eSố lần vi phạm: &c{violations}/{max_violations}
+  &7Vui lòng gỡ bỏ mod trước khi vào lại máy chủ.
+  &cNếu vi phạm quá {max_violations} lần, bạn sẽ bị BAN VĨNH VIỄN!
+  &bHỗ trợ / Liên hệ Discord: &f{discord}
 kick-khong-phan-hoi: |-
-  &cKết nối bị từ chối bởi MegaAntiSpoof
-  &7Client không phản hồi kiểm tra bảo mật sau 20 lần thử.
-  &7Hãy tắt mod chặn Sign Editor packet hoặc liên hệ quản trị viên.
+  &c[MegaAntiSpoof] Kết nối bị từ chối!
+  &7Client không phản hồi kiểm tra bảo mật sau nhiều lần thử.
+  &7Hãy tắt mod chặn Sign Editor packet hoặc liên hệ ban quản trị.
+  &bHỗ trợ / Liên hệ Discord: &f{discord}
+ban: |-
+  &4&l[MegaAntiSpoof] BẠN ĐÃ BỊ BAN VĨNH VIỄN!
+  &cTài khoản của bạn đã bị khóa vĩnh viễn khỏi máy chủ.
+  &7Lý do: Cố chấp sử dụng mod cấm (&f{mods}&7) quá &c{max_violations}&7 lần.
+  &7Vui lòng gỡ bỏ toàn bộ phần mềm gian lận và liên hệ hỗ trợ nếu muốn kháng cáo.
+  &bKháng cáo tại Discord: &f{discord}
+ban-reason: "Cố chấp sử dụng mod cấm ({mods}) quá {max_violations} lần. Kháng cáo: {discord}"
