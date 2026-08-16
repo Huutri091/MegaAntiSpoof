@@ -7,6 +7,7 @@ import java.util.function.Consumer;
 
 final class SchedulerFacade {
     private SchedulerFacade() { }
+
     static void later(MegaAntiSpoofPlugin plugin, Player player, long ticks, Runnable task) {
         try {
             Method getScheduler = player.getClass().getMethod("getScheduler");
@@ -16,6 +17,17 @@ final class SchedulerFacade {
             runDelayed.invoke(scheduler, plugin, (Consumer<Object>) ignored -> task.run(), null, Math.max(1, ticks));
         } catch (ReflectiveOperationException ignored) {
             Bukkit.getScheduler().runTaskLater(plugin, task, Math.max(1, ticks));
+        }
+    }
+
+    static void runGlobal(MegaAntiSpoofPlugin plugin, Runnable task) {
+        try {
+            Method getGlobalRegionScheduler = Bukkit.class.getMethod("getGlobalRegionScheduler");
+            Object globalScheduler = getGlobalRegionScheduler.invoke(null);
+            Method run = globalScheduler.getClass().getMethod("run", org.bukkit.plugin.Plugin.class, Consumer.class);
+            run.invoke(globalScheduler, plugin, (Consumer<Object>) ignored -> task.run());
+        } catch (ReflectiveOperationException ignored) {
+            Bukkit.getScheduler().runTask(plugin, task);
         }
     }
 }

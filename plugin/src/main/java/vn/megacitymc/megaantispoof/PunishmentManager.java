@@ -7,6 +7,7 @@ import org.bukkit.entity.Player;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
@@ -83,25 +84,55 @@ final class PunishmentManager {
         return plugin.getConfig().getString("punishment.discord-invite", "https://discord.gg/megacitymc");
     }
 
+    List<String> getBanCommands() {
+        return plugin.getConfig().getStringList("punishment.ban-commands");
+    }
+
     void executeBan(Player player, String mods, int currentViolations) {
         int max = getMaxViolations();
         String discord = getDiscordInvite();
-        String banReason = messages.format("ban-reason",
-                "{player}", player.getName(),
-                "{mods}", mods,
-                "{violations}", String.valueOf(currentViolations),
-                "{max_violations}", String.valueOf(max),
-                "{discord}", discord);
-        if (banReason.startsWith("&cThiếu message:")) {
-            banReason = "Cố chấp dùng mod cấm (" + mods + ") quá " + max + " lần. Kháng cáo: " + discord;
-        }
+        String ip = player.getAddress() != null && player.getAddress().getAddress() != null
+                ? player.getAddress().getAddress().getHostAddress()
+                : "Không xác định";
 
-        try {
-            @SuppressWarnings({"unchecked", "deprecation"})
-            BanList<String> banList = (BanList<String>) Bukkit.getBanList(BanList.Type.NAME);
-            banList.addBan(player.getName(), banReason, (java.time.Instant) null, "MegaAntiSpoof");
-        } catch (Throwable t) {
-            plugin.getLogger().warning("Không thể thêm người chơi vào BanList: " + t.getMessage());
+        List<String> customCommands = getBanCommands();
+        if (customCommands != null && !customCommands.isEmpty()) {
+            for (String rawCmd : customCommands) {
+                if (rawCmd == null || rawCmd.isBlank()) continue;
+                String cmd = rawCmd
+                        .replace("{player}", player.getName())
+                        .replace("{uuid}", player.getUniqueId().toString())
+                        .replace("{ip}", ip)
+                        .replace("{mods}", mods)
+                        .replace("{violations}", String.valueOf(currentViolations))
+                        .replace("{max_violations}", String.valueOf(max))
+                        .replace("{discord}", discord);
+                SchedulerFacade.runGlobal(plugin, () -> {
+                    try {
+                        Bukkit.dispatchCommand(Bukkit.getConsoleSender(), cmd);
+                    } catch (Throwable t) {
+                        plugin.getLogger().warning("Lỗi khi chạy lệnh ban: " + cmd + " (" + t.getMessage() + ")");
+                    }
+                });
+            }
+        } else {
+            String banReason = messages.format("ban-reason",
+                    "{player}", player.getName(),
+                    "{mods}", mods,
+                    "{violations}", String.valueOf(currentViolations),
+                    "{max_violations}", String.valueOf(max),
+                    "{discord}", discord);
+            if (banReason.startsWith("&cThiếu message:")) {
+                banReason = "Cố chấp dùng mod cấm (" + mods + ") quá " + max + " lần. Kháng cáo: " + discord;
+            }
+
+            try {
+                @SuppressWarnings({"unchecked", "deprecation"})
+                BanList<String> banList = (BanList<String>) Bukkit.getBanList(BanList.Type.NAME);
+                banList.addBan(player.getName(), banReason, (java.time.Instant) null, "MegaAntiSpoof");
+            } catch (Throwable t) {
+                plugin.getLogger().warning("Không thể thêm người chơi vào BanList: " + t.getMessage());
+            }
         }
 
         String alertText = messages.format("ket-qua.da-ban",
@@ -123,7 +154,9 @@ final class PunishmentManager {
                 "{violations}", String.valueOf(currentViolations),
                 "{max_violations}", String.valueOf(max),
                 "{discord}", discord);
-        player.kickPlayer(banKickMessage);
+        if (player.isOnline()) {
+            player.kickPlayer(banKickMessage);
+        }
     }
 
     void executeKick(Player player, String mods, int currentViolations) {
@@ -135,7 +168,9 @@ final class PunishmentManager {
                 "{violations}", String.valueOf(currentViolations),
                 "{max_violations}", String.valueOf(max),
                 "{discord}", discord);
-        player.kickPlayer(kickMessage);
+        if (player.isOnline()) {
+            player.kickPlayer(kickMessage);
+        }
     }
 
     void executeNoResponseKick(Player player) {
@@ -143,6 +178,8 @@ final class PunishmentManager {
         String kickMessage = messages.format("kick-khong-phan-hoi",
                 "{player}", player.getName(),
                 "{discord}", discord);
-        player.kickPlayer(kickMessage);
+        if (player.isOnline()) {
+            player.kickPlayer(kickMessage);
+        }
     }
 }

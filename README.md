@@ -133,6 +133,9 @@ punishment:
   max-violations: 3
   reset-on-pass: true
   discord-invite: "https://discord.gg/megacitymc"
+  ban-commands:
+    - "ban {player} Cố chấp sử dụng mod cấm ({mods}) quá {max_violations} lần. Kháng cáo: {discord}"
+
 
 # Cấu hình Discord Webhook báo cáo chi tiết
 webhook:
