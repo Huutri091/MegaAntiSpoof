@@ -107,6 +107,11 @@ blocked-mods:
     name: "XPlus AutoFish"
     key: "key.autofish.open_gui"
     mode: KEYBIND
+  autoswitch:
+    name: "AutoSwitch"
+    key: "key.autoswitch.toggle"
+    mode: KEYBIND
+
 
 
 

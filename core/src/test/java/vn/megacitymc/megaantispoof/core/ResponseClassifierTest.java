@@ -52,4 +52,16 @@ class ResponseClassifierTest {
         var notDetected = new ResponseClassifier().detect(signatures, List.of("key.autofish.open_gui"));
         assertTrue(notDetected.isEmpty());
     }
+
+    @Test void detectsAutoSwitch() {
+        var signatures = List.of(
+                new ModSignature("autoswitch", "AutoSwitch", "key.autoswitch.toggle", ModSignature.Mode.KEYBIND)
+        );
+        var detected = new ResponseClassifier().detect(signatures, List.of("AutoSwitch Toggle Key"));
+        assertEquals(1, detected.size());
+        assertTrue(detected.contains("autoswitch"));
+
+        var notDetected = new ResponseClassifier().detect(signatures, List.of("key.autoswitch.toggle"));
+        assertTrue(notDetected.isEmpty());
+    }
 }
