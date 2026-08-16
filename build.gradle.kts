@@ -5,7 +5,7 @@ plugins {
 
 allprojects {
     group = "vn.megacitymc.megaantispoof"
-    version = "1.0.0-SNAPSHOT"
+    version = "1.0.8"
     repositories {
         mavenCentral()
         maven("https://repo.papermc.io/repository/maven-public/")

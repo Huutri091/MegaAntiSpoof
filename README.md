@@ -208,7 +208,7 @@ MegaAntiSpoof cung cấp API độc lập thông qua module `api`:
 ### Gradle
 ```kotlin
 dependencies {
-    compileOnly("vn.megacitymc:megaantispoof-api:1.0.0-SNAPSHOT")
+    compileOnly("vn.megacitymc:megaantispoof-api:1.0.8")
 }
 ```
 
