@@ -5,6 +5,9 @@ debug:
   # In JSON đầy đủ của từng UPDATE_SIGN ra console dưới tiền tố SIGN-JSON.
   sign-response: true
 
+# Thu thập số liệu thống kê ẩn danh qua bStats (giúp theo dõi số lượng máy chủ sử dụng)
+metrics: true
+
 dependencies:
   # Tự tải ProtocolLib 5.4.0 và PacketEvents 2.13.0 từ nguồn chính thức nếu thiếu.
   # Sau khi tải xong bắt buộc khởi động lại server; plugin không hot-load thư viện packet.
@@ -56,7 +59,6 @@ punishment:
   # Bạn có thể thêm/bớt các dòng lệnh tùy thích:
   ban-commands:
     - "ban {player} Cố chấp sử dụng mod cấm ({mods}) quá {max_violations} lần. Kháng cáo: {discord}"
-
 
 webhook:
   # Bật gửi kết quả PASSED/FAILED/PROTECTED/ERROR lên Discord.
@@ -134,8 +136,7 @@ blocked-mods:
     name: "AntiAFK"
     key: "key.antiafk.toggle"
     mode: KEYBIND
-
-
-
-
-
+  litematica:
+    name: "Litematica"
+    key: "litematica.gui.title.schematic_browser"
+    mode: TRANSLATE

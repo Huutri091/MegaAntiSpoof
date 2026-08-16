@@ -37,6 +37,12 @@ public final class MegaAntiSpoofPlugin extends JavaPlugin {
         if (root != null) { root.setExecutor(command); root.setTabCompleter(command); }
         Bukkit.getPluginManager().registerEvents(challenges, this);
         new PacketEventsBridge(this, challenges).enable();
+
+        if (getConfig().getBoolean("metrics", true)) {
+            int pluginId = 25100;
+            new org.bstats.bukkit.Metrics(this, pluginId);
+        }
+
         getLogger().info("MegaAntiSpoof " + getDescription().getVersion() + " sẵn sàng (" + adapter.family() + ").");
     }
 

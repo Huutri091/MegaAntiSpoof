@@ -4,6 +4,7 @@ dependencies {
     implementation(project(":nms-v1_21"))
     implementation(project(":nms-v1_21_9"))
     implementation(project(":nms-v26"))
+    implementation("org.bstats:bstats-bukkit:3.1.0")
     compileOnly("io.papermc.paper:paper-api:1.21.11-R0.1-SNAPSHOT")
     compileOnly("net.dmulloy2:ProtocolLib:5.4.0")
     compileOnly("com.github.retrooper:packetevents-spigot:2.13.0")
@@ -17,6 +18,7 @@ tasks.processResources {
 tasks.shadowJar {
     archiveBaseName.set("MegaAntiSpoof")
     archiveClassifier.set("")
+    relocate("org.bstats", "vn.megacitymc.megaantispoof.metrics")
     mergeServiceFiles()
 }
 tasks.build { dependsOn(tasks.shadowJar) }

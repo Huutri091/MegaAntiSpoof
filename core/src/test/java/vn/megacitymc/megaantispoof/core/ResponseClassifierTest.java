@@ -76,4 +76,16 @@ class ResponseClassifierTest {
         var notDetected = new ResponseClassifier().detect(signatures, List.of("key.antiafk.toggle"));
         assertTrue(notDetected.isEmpty());
     }
+
+    @Test void detectsLitematica() {
+        var signatures = List.of(
+                new ModSignature("litematica", "Litematica", "litematica.gui.title.schematic_browser", ModSignature.Mode.TRANSLATE)
+        );
+        var detected = new ResponseClassifier().detect(signatures, List.of("Schematic Browser"));
+        assertEquals(1, detected.size());
+        assertTrue(detected.contains("litematica"));
+
+        var notDetected = new ResponseClassifier().detect(signatures, List.of("litematica.gui.title.schematic_browser"));
+        assertTrue(notDetected.isEmpty());
+    }
 }

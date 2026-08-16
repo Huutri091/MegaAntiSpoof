@@ -5,6 +5,7 @@
 ![Java Version](https://img.shields.io/badge/Java-25%2B-ED8B00?style=for-the-badge&logo=openjdk&logoColor=white)
 ![Minecraft Versions](https://img.shields.io/badge/Minecraft-1.21%20--%2026.x-52A535?style=for-the-badge&logo=minecraft&logoColor=white)
 ![Platform Support](https://img.shields.io/badge/Platform-Paper%20%7C%20Purpur%20%7C%20Folia-1877F2?style=for-the-badge)
+![bStats](https://img.shields.io/badge/bStats-Metrics-orange?style=for-the-badge)
 ![License](https://img.shields.io/badge/License-MIT-blue?style=for-the-badge)
 ![Build Status](https://img.shields.io/badge/Build-Passing-brightgreen?style=for-the-badge)
 
@@ -43,7 +44,7 @@ Plugin hoạt động hoàn toàn từ phía máy chủ (**100% Server-Side**), 
 
 ## 📋 Danh sách Mod / Client được hỗ trợ
 
-MegaAntiSpoof hiện được cấu hình mặc định để nhận diện và ngăn chặn **16 mod / hack client**:
+MegaAntiSpoof hiện được cấu hình mặc định để nhận diện và ngăn chặn **17 mod / hack client**:
 
 | STT | Tên Mod / Client | Khóa nhận diện (`Key`) | Chế độ | Phân loại / Mục đích |
 | :---: | :--- | :--- | :---: | :--- |
@@ -63,6 +64,7 @@ MegaAntiSpoof hiện được cấu hình mặc định để nhận diện và 
 | 14 | **4E Client** | `key.4e-client.clickgui` | `KEYBIND` | Hack Client |
 | 15 | **Nebula Core** | `key.nebulacore.menu` | `KEYBIND` | Cheat Menu / Hack Client |
 | 16 | **Inventory Profiles Next** | `key.inventoryprofilesnext.open_gui` | `KEYBIND` | Tự động thao tác & dọn rương siêu tốc |
+| 17 | **Litematica** | `litematica.gui.title.schematic_browser` | `TRANSLATE` | Mod Schematic / Easy Place / In-game blueprint |
 
 *(Bạn có thể dễ dàng thêm bớt bất kỳ mod nào khác trực tiếp trong file `config.yml`)*.
 
