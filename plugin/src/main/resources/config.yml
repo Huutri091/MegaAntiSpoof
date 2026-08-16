@@ -99,4 +99,9 @@ blocked-mods:
     name: "ThunderHack"
     key: "descriptions.combat.autocrystal"
     mode: TRANSLATE
+  wurst:
+    name: "Wurst Client"
+    key: "key.wurst.zoom"
+    mode: KEYBIND
+
 

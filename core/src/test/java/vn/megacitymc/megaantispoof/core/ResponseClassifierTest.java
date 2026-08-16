@@ -28,4 +28,16 @@ class ResponseClassifierTest {
         assertTrue(detected.contains("liquidbounce"));
         assertFalse(detected.contains("thunderhack"));
     }
+
+    @Test void detectsWurstClient() {
+        var signatures = List.of(
+                new ModSignature("wurst", "Wurst Client", "key.wurst.zoom", ModSignature.Mode.KEYBIND)
+        );
+        var detected = new ResponseClassifier().detect(signatures, List.of("V"));
+        assertEquals(1, detected.size());
+        assertTrue(detected.contains("wurst"));
+
+        var notDetected = new ResponseClassifier().detect(signatures, List.of("key.wurst.zoom"));
+        assertTrue(notDetected.isEmpty());
+    }
 }
