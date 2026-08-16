@@ -1,0 +1,23 @@
+name: MegaAntiSpoof
+version: ${version}
+main: vn.megacitymc.megaantispoof.MegaAntiSpoofPlugin
+api-version: '1.21'
+author: MEGACITYMC
+description: Kiểm tra phòng vệ client bằng challenge packet MC-265322.
+folia-supported: true
+softdepend: [ProtocolLib, packetevents, PacketEvents]
+commands:
+  megaantispoof:
+    aliases: [mas, antispoof]
+    description: Quản trị MegaAntiSpoof
+    usage: /<command> check <player> [mod1,mod2] | debug <on|off|status> | reload
+permissions:
+  megaantispoof.admin:
+    description: Kiểm tra người chơi và tải lại cấu hình
+    default: op
+  megaantispoof.alert:
+    description: Nhận cảnh báo phát hiện
+    default: op
+  megaantispoof.bypass:
+    description: Bỏ qua kiểm tra tự động
+    default: false

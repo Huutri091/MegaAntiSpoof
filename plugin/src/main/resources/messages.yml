@@ -1,0 +1,24 @@
+khong-co-quyen: "&cBạn không có quyền sử dụng lệnh này."
+da-tai-lai: "&aĐã tải lại config.yml và messages.yml."
+khong-tim-thay: "&cKhông tìm thấy người chơi đang trực tuyến."
+bat-dau: "&eĐang kiểm tra bảo mật người chơi &f{player}&e..."
+dang-kiem-tra: "&cNgười chơi đang được kiểm tra hoặc danh sách mod không hợp lệ."
+tro-giup: "&eDùng: /megaantispoof check <người_chơi> [mod1,mod2], /megaantispoof debug <on|off|status> hoặc /megaantispoof reload"
+debug:
+  da-bat: "&aĐã bật debug SIGN-JSON. Phản hồi biển sẽ được in ra console."
+  da-tat: "&eĐã tắt debug SIGN-JSON."
+  trang-thai: "&eDebug SIGN-JSON hiện đang: &f{status}"
+  cu-phap: "&cDùng: /megaantispoof debug <on|off|status>"
+ket-qua:
+  dat: "&a[MegaAntiSpoof] &f{player} &aPASSED - không phát hiện mod cấm."
+  khong-dat: "&c[MegaAntiSpoof] &f{player} &cKHÔNG ĐẠT - phát hiện: &f{mods}"
+  duoc-bao-ve: "&6[MegaAntiSpoof] &f{player} &6không phản hồi challenge (PROTECTED); không kết luận gian lận."
+  loi: "&c[MegaAntiSpoof] Không thể hoàn tất kiểm tra cho &f{player}&c."
+kick: |-
+  &cKết nối bị từ chối bởi MegaAntiSpoof
+  &7Phát hiện mod/client bị cấm: &f{mods}
+  &7Nếu đây là nhầm lẫn, hãy liên hệ quản trị viên.
+kick-khong-phan-hoi: |-
+  &cKết nối bị từ chối bởi MegaAntiSpoof
+  &7Client không phản hồi kiểm tra bảo mật sau 20 lần thử.
+  &7Hãy tắt mod chặn Sign Editor packet hoặc liên hệ quản trị viên.

@@ -1,0 +1,93 @@
+# MegaAntiSpoof 1.0.0-SNAPSHOT - MEGACITYMC
+# Mọi khoảng thời gian trong file này được tính theo tick (20 tick ≈ 1 giây).
+
+debug:
+  # In JSON đầy đủ của từng UPDATE_SIGN ra console dưới tiền tố SIGN-JSON.
+  sign-response: true
+
+dependencies:
+  # Tự tải ProtocolLib 5.4.0 và PacketEvents 2.13.0 từ nguồn chính thức nếu thiếu.
+  # Sau khi tải xong bắt buộc khởi động lại server; plugin không hot-load thư viện packet.
+  auto-download: true
+  # Có thể điền SHA-256 để khóa chặt artifact. Để rỗng vẫn kiểm tra HTTPS, kích thước và JAR magic.
+  sha256:
+    protocollib: ""
+    packetevents: ""
+
+check-on-join:
+  # Tự động kiểm tra người chơi sau khi đăng nhập.
+  enabled: true
+  # Chờ client tải xong chunk trước khi mở challenge ẩn.
+  delay-ticks: 80
+
+challenge:
+  # Thời gian tối đa đợi client trả UPDATE_SIGN cho mỗi nhóm chữ ký.
+  timeout-ticks: 60
+  # Khoảng nghỉ giữa hai nhóm để tránh burst packet trên Folia/Canvas.
+  interval-ticks: 4
+  # Nếu không nhận UPDATE_SIGN, gửi lại đúng batch này tối đa số lần dưới đây.
+  max-retries: 20
+  # Thời gian nghỉ giữa các lần gửi lại khi client không phản hồi.
+  retry-interval-ticks: 10
+  # Tự đóng Sign Editor sau khi mở. 1 tick giúp giao diện gần như không nhìn thấy.
+  # Không đặt bằng 0 vì một số client chưa kịp khởi tạo màn hình để phân giải khóa.
+  close-gui-delay-ticks: 1
+
+actions:
+  # Kick khi ít nhất một chữ ký mod cấm được phân giải.
+  kick: true
+  # Kick sau khi không phản hồi đủ số lần thử; không coi đây là phát hiện mod cụ thể.
+  kick-on-no-response: true
+
+webhook:
+  # Bật gửi kết quả PASSED/FAILED/PROTECTED/ERROR lên Discord.
+  enabled: false
+  # Tên máy chủ hiển thị trên webhook.
+  server-name: "MegaCity #1"
+  # Không chia sẻ URL webhook công khai hoặc commit URL thật vào Git.
+  url: ""
+
+# Mỗi khóa phải tồn tại trong gói ngôn ngữ của mod tương ứng.
+# TRANSLATE đọc khóa dịch; KEYBIND đọc tên phím mà mod đăng ký.
+# Danh sách mặc định được lập từ các client/mod trong blockmodclient.
+blocked-mods:
+  meteor-client:
+    name: "Meteor Client"
+    key: "key.meteor-client.open-gui"
+    mode: KEYBIND
+  baritone:
+    name: "Baritone"
+    key: "baritone.settings"
+    mode: TRANSLATE
+  freecam:
+    name: "Freecam"
+    key: "key.freecam.toggle"
+    mode: KEYBIND
+  autoclicker:
+    name: "Auto Clicker"
+    key: "key.category.autoclicker.keybinding-title"
+    mode: TRANSLATE
+  coffee:
+    name: "Coffee Client"
+    key: "key.coffee.clickgui"
+    mode: KEYBIND
+  inventoryprofilesnext:
+    name: "Inventory Profiles Next"
+    key: "key.inventoryprofilesnext.open_gui"
+    mode: KEYBIND
+  waterclient:
+    name: "Water Client V3"
+    key: "key.waterclient.clickgui"
+    mode: KEYBIND
+  4e-client:
+    name: "4E Client"
+    key: "key.4e-client.clickgui"
+    mode: KEYBIND
+  nebulacore:
+    name: "Nebula Core"
+    key: "key.nebulacore.menu"
+    mode: KEYBIND
+  world-downloader:
+    name: "Minecraft World Downloader"
+    key: "wdl.gui.title"
+    mode: TRANSLATE
