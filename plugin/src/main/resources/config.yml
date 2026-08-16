@@ -91,3 +91,12 @@ blocked-mods:
     name: "Minecraft World Downloader"
     key: "wdl.gui.title"
     mode: TRANSLATE
+  liquidbounce:
+    name: "LiquidBounce"
+    key: "liquidbounce.command.bind.description"
+    mode: TRANSLATE
+  thunderhack:
+    name: "ThunderHack"
+    key: "descriptions.combat.autocrystal"
+    mode: TRANSLATE
+

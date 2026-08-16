@@ -17,4 +17,15 @@ class ResponseClassifierTest {
         assertTrue(new ResponseClassifier().detect(signatures,
                 List.of("[{\\\"translate\\\":\\\"baritone.settings\\\"}]"), null).isEmpty());
     }
+
+    @Test void detectsLiquidBounceAndThunderHack() {
+        var signatures = List.of(
+                new ModSignature("liquidbounce", "LiquidBounce", "liquidbounce.command.bind.description", ModSignature.Mode.TRANSLATE),
+                new ModSignature("thunderhack", "ThunderHack", "descriptions.combat.autocrystal", ModSignature.Mode.TRANSLATE)
+        );
+        var detected = new ResponseClassifier().detect(signatures, List.of("Binds a module to a key.", "descriptions.combat.autocrystal"));
+        assertEquals(1, detected.size());
+        assertTrue(detected.contains("liquidbounce"));
+        assertFalse(detected.contains("thunderhack"));
+    }
 }
