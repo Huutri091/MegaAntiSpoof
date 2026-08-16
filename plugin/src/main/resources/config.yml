@@ -48,8 +48,11 @@ punishment:
   reset-on-pass: true
   # Link Discord hỗ trợ/kháng cáo hiển thị trong thông báo kick và ban.
   discord-invite: "https://discord.gg/megacitymc"
+  # Danh sách lệnh Console chạy khi người chơi bị kick cảnh báo ở các lần đầu (lần 1, 2).
+  # Hỗ trợ placeholders: {player}, {uuid}, {ip}, {mods}, {violations}, {max_violations}, {remaining}, {discord}
+  kick-commands: []
   # Danh sách lệnh Console chạy khi người chơi vi phạm đạt giới hạn (lần thứ 3).
-  # Hỗ trợ placeholders: {player}, {uuid}, {ip}, {mods}, {violations}, {max_violations}, {discord}
+  # Hỗ trợ placeholders: {player}, {uuid}, {ip}, {mods}, {violations}, {max_violations}, {remaining}, {discord}
   # Bạn có thể thêm/bớt các dòng lệnh tùy thích:
   ban-commands:
     - "ban {player} Cố chấp sử dụng mod cấm ({mods}) quá {max_violations} lần. Kháng cáo: {discord}"

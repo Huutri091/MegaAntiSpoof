@@ -88,8 +88,13 @@ final class PunishmentManager {
         return plugin.getConfig().getStringList("punishment.ban-commands");
     }
 
+    List<String> getKickCommands() {
+        return plugin.getConfig().getStringList("punishment.kick-commands");
+    }
+
     void executeBan(Player player, String mods, int currentViolations) {
         int max = getMaxViolations();
+        int remaining = Math.max(0, max - currentViolations);
         String discord = getDiscordInvite();
         String ip = player.getAddress() != null && player.getAddress().getAddress() != null
                 ? player.getAddress().getAddress().getHostAddress()
@@ -106,6 +111,7 @@ final class PunishmentManager {
                         .replace("{mods}", mods)
                         .replace("{violations}", String.valueOf(currentViolations))
                         .replace("{max_violations}", String.valueOf(max))
+                        .replace("{remaining}", String.valueOf(remaining))
                         .replace("{discord}", discord);
                 SchedulerFacade.runGlobal(plugin, () -> {
                     try {
@@ -121,6 +127,7 @@ final class PunishmentManager {
                     "{mods}", mods,
                     "{violations}", String.valueOf(currentViolations),
                     "{max_violations}", String.valueOf(max),
+                    "{remaining}", String.valueOf(remaining),
                     "{discord}", discord);
             if (banReason.startsWith("&cThiếu message:")) {
                 banReason = "Cố chấp dùng mod cấm (" + mods + ") quá " + max + " lần. Kháng cáo: " + discord;
@@ -137,9 +144,12 @@ final class PunishmentManager {
 
         String alertText = messages.format("ket-qua.da-ban",
                 "{player}", player.getName(),
+                "{uuid}", player.getUniqueId().toString(),
+                "{ip}", ip,
                 "{mods}", mods,
                 "{violations}", String.valueOf(currentViolations),
                 "{max_violations}", String.valueOf(max),
+                "{remaining}", String.valueOf(remaining),
                 "{discord}", discord);
         Bukkit.getConsoleSender().sendMessage(alertText);
         for (Player online : Bukkit.getOnlinePlayers()) {
@@ -150,9 +160,12 @@ final class PunishmentManager {
 
         String banKickMessage = messages.format("ban",
                 "{player}", player.getName(),
+                "{uuid}", player.getUniqueId().toString(),
+                "{ip}", ip,
                 "{mods}", mods,
                 "{violations}", String.valueOf(currentViolations),
                 "{max_violations}", String.valueOf(max),
+                "{remaining}", String.valueOf(remaining),
                 "{discord}", discord);
         if (player.isOnline()) {
             player.kickPlayer(banKickMessage);
@@ -161,12 +174,59 @@ final class PunishmentManager {
 
     void executeKick(Player player, String mods, int currentViolations) {
         int max = getMaxViolations();
+        int remaining = Math.max(0, max - currentViolations);
         String discord = getDiscordInvite();
-        String kickMessage = messages.format("kick",
+        String ip = player.getAddress() != null && player.getAddress().getAddress() != null
+                ? player.getAddress().getAddress().getHostAddress()
+                : "Không xác định";
+
+        String alertText = messages.format("ket-qua.canh-bao-kick",
                 "{player}", player.getName(),
+                "{uuid}", player.getUniqueId().toString(),
+                "{ip}", ip,
                 "{mods}", mods,
                 "{violations}", String.valueOf(currentViolations),
                 "{max_violations}", String.valueOf(max),
+                "{remaining}", String.valueOf(remaining),
+                "{discord}", discord);
+        Bukkit.getConsoleSender().sendMessage(alertText);
+        for (Player online : Bukkit.getOnlinePlayers()) {
+            if (online.hasPermission("megaantispoof.alert")) {
+                online.sendMessage(alertText);
+            }
+        }
+
+        List<String> customCommands = getKickCommands();
+        if (customCommands != null && !customCommands.isEmpty()) {
+            for (String rawCmd : customCommands) {
+                if (rawCmd == null || rawCmd.isBlank()) continue;
+                String cmd = rawCmd
+                        .replace("{player}", player.getName())
+                        .replace("{uuid}", player.getUniqueId().toString())
+                        .replace("{ip}", ip)
+                        .replace("{mods}", mods)
+                        .replace("{violations}", String.valueOf(currentViolations))
+                        .replace("{max_violations}", String.valueOf(max))
+                        .replace("{remaining}", String.valueOf(remaining))
+                        .replace("{discord}", discord);
+                SchedulerFacade.runGlobal(plugin, () -> {
+                    try {
+                        Bukkit.dispatchCommand(Bukkit.getConsoleSender(), cmd);
+                    } catch (Throwable t) {
+                        plugin.getLogger().warning("Lỗi khi chạy lệnh kick cảnh báo: " + cmd + " (" + t.getMessage() + ")");
+                    }
+                });
+            }
+        }
+
+        String kickMessage = messages.format("kick",
+                "{player}", player.getName(),
+                "{uuid}", player.getUniqueId().toString(),
+                "{ip}", ip,
+                "{mods}", mods,
+                "{violations}", String.valueOf(currentViolations),
+                "{max_violations}", String.valueOf(max),
+                "{remaining}", String.valueOf(remaining),
                 "{discord}", discord);
         if (player.isOnline()) {
             player.kickPlayer(kickMessage);

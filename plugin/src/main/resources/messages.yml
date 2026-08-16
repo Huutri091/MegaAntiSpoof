@@ -12,15 +12,16 @@ debug:
 ket-qua:
   dat: "&a[MegaAntiSpoof] &f{player} &aPASSED - không phát hiện mod cấm."
   khong-dat: "&c[MegaAntiSpoof] &f{player} &cKHÔNG ĐẠT - phát hiện: &f{mods} &e(Vi phạm: &c{violations}/{max_violations}&e)"
-  da-ban: "&4[MegaAntiSpoof] &cĐÃ BAN VĨNH VIỄN &f{player} &cdo cố chấp dùng mod cấm &f{mods} &cquá {max_violations} lần!"
+  canh-bao-kick: "&e[MegaAntiSpoof] &6⚠️ CẢNH BÁO: &f{player} &cđã bị KICK do sử dụng &f{mods} &e(Vi phạm &c{violations}/{max_violations}&e, còn &c{remaining}&e lần là BAN VĨNH VIỄN)!"
+  da-ban: "&4[MegaAntiSpoof] &c🚨 ĐÃ BAN VĨNH VIỄN &f{player} &cdo cố chấp dùng mod cấm &f{mods} &cquá {max_violations} lần!"
   duoc-bao-ve: "&6[MegaAntiSpoof] &f{player} &6không phản hồi challenge (PROTECTED); không kết luận gian lận."
   loi: "&c[MegaAntiSpoof] Không thể hoàn tất kiểm tra cho &f{player}&c."
 kick: |-
-  &c[MegaAntiSpoof] Kết nối bị từ chối!
-  &7Phát hiện mod/client bị cấm: &f{mods}
-  &eSố lần vi phạm: &c{violations}/{max_violations}
-  &7Vui lòng gỡ bỏ mod trước khi vào lại máy chủ.
-  &cNếu vi phạm quá {max_violations} lần, bạn sẽ bị BAN VĨNH VIỄN!
+  &c&l[MegaAntiSpoof] ⚠️ CẢNH BÁO VI PHẠM MOD BỊ CẤM!
+  &7Phát hiện mod/client không hợp lệ: &f{mods}
+  &eSố lần vi phạm: &c{violations}/{max_violations} &e(Còn &c{remaining}&e lần trước khi bị cấm vĩnh viễn)
+  &c→ Vui lòng gỡ bỏ hoàn toàn mod trước khi vào lại máy chủ!
+  &cNếu tiếp tục cố chấp vào lần thứ {max_violations}, bạn sẽ bị &4&lBAN VĨNH VIỄN&c!
   &bHỗ trợ / Liên hệ Discord: &f{discord}
 kick-khong-phan-hoi: |-
   &c[MegaAntiSpoof] Kết nối bị từ chối!
