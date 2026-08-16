@@ -111,6 +111,11 @@ blocked-mods:
     name: "AutoSwitch"
     key: "key.autoswitch.toggle"
     mode: KEYBIND
+  antiafk:
+    name: "AntiAFK"
+    key: "key.antiafk.toggle"
+    mode: KEYBIND
+
 
 
 

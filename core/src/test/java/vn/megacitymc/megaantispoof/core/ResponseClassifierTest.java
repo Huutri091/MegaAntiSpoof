@@ -64,4 +64,16 @@ class ResponseClassifierTest {
         var notDetected = new ResponseClassifier().detect(signatures, List.of("key.autoswitch.toggle"));
         assertTrue(notDetected.isEmpty());
     }
+
+    @Test void detectsAntiAfk() {
+        var signatures = List.of(
+                new ModSignature("antiafk", "AntiAFK", "key.antiafk.toggle", ModSignature.Mode.KEYBIND)
+        );
+        var detected = new ResponseClassifier().detect(signatures, List.of("AntiAfk Toggle"));
+        assertEquals(1, detected.size());
+        assertTrue(detected.contains("antiafk"));
+
+        var notDetected = new ResponseClassifier().detect(signatures, List.of("key.antiafk.toggle"));
+        assertTrue(notDetected.isEmpty());
+    }
 }
