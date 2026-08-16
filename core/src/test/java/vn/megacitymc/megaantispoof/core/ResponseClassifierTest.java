@@ -40,4 +40,16 @@ class ResponseClassifierTest {
         var notDetected = new ResponseClassifier().detect(signatures, List.of("key.wurst.zoom"));
         assertTrue(notDetected.isEmpty());
     }
+
+    @Test void detectsXPlusAutoFish() {
+        var signatures = List.of(
+                new ModSignature("xplus-autofish", "XPlus AutoFish", "key.autofish.open_gui", ModSignature.Mode.KEYBIND)
+        );
+        var detected = new ResponseClassifier().detect(signatures, List.of("Open XPlus Autofish GUI"));
+        assertEquals(1, detected.size());
+        assertTrue(detected.contains("xplus-autofish"));
+
+        var notDetected = new ResponseClassifier().detect(signatures, List.of("key.autofish.open_gui"));
+        assertTrue(notDetected.isEmpty());
+    }
 }

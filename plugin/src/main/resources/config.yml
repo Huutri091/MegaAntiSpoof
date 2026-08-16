@@ -103,5 +103,10 @@ blocked-mods:
     name: "Wurst Client"
     key: "key.wurst.zoom"
     mode: KEYBIND
+  xplus-autofish:
+    name: "XPlus AutoFish"
+    key: "key.autofish.open_gui"
+    mode: KEYBIND
+
 
 
